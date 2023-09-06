@@ -40,12 +40,14 @@ expressionmale = data[row,colsmale]
 x = [10,11,12,13,"14A","14B","14C","14D"]
 y = expression
 ymale = expressionmale
+ymaledouble = ymale * 2
 
 # Plot data
 fig, ax = plt.subplots()
 ax.set_title( "FBtr0073461" )
 ax.plot(x, y, c = "red", label = "female" )
 ax.plot(x, ymale, c = "blue", label = "male")
+ax.plot(x, ymaledouble, c = "green", label = "male x2")
 fig.savefig( "FBtr0073461.png" )
 plt.show()
 plt.close( fig )
