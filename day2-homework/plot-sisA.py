@@ -44,10 +44,18 @@ ymaledouble = ymale * 2
 
 # Plot data
 fig, ax = plt.subplots()
-ax.set_title( "FBtr0073461" )
+ax.set_title( "sisA(FBtr0073461)" )
 ax.plot(x, y, c = "red", label = "female" )
 ax.plot(x, ymale, c = "blue", label = "male")
 ax.plot(x, ymaledouble, c = "green", label = "male x2")
+
+ax.set_xlabel("developmental stage")
+ax.set_ylabel("mRNA abundance (RPKM)")
+
+ax.set_ylim(0,250)
 fig.savefig( "FBtr0073461.png" )
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.legend()
 plt.show()
 plt.close( fig )
