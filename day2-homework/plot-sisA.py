@@ -6,7 +6,18 @@ import matplotlib.pyplot as plt
 # Get dataset to recreate Fig 3B from Lott et al 2011 PLoS Biology https://pubmed.gov/21346796
 # wget https://github.com/bxlab/cmdb-quantbio/raw/main/assignments/lab/bulk_RNA-seq/extra_data/all_annotated.csv
 
+'''
 transcripts = np.loadtxt( "/Users/cmdb/Desktop/swp-python/all_annotated.csv", delimiter=",", usecols=0, dtype="<U30", skiprows=1 )
+print( "transcripts: ", transcripts[0:5] )
+'''
+transcripts = []
+with open("/Users/cmdb/Desktop/swp-python/all_annotated.csv","r") as f:
+    lines = f.readlines()
+    linenofirst = lines[1:]
+    for line in linenofirst:
+        line = line.rstrip()
+        line_list = line.split(',')
+        transcripts.append(line_list[0])
 print( "transcripts: ", transcripts[0:5] )
 
 samples = np.loadtxt( "/Users/cmdb/Desktop/swp-python/all_annotated.csv", delimiter=",", max_rows=1, dtype="<U30" )[2:]
@@ -14,6 +25,8 @@ print( "samples: ", samples[0:5] )
 
 data = np.loadtxt( "/Users/cmdb/Desktop/swp-python/all_annotated.csv", delimiter=",", dtype=np.float32, skiprows=1, usecols=range(2, len(samples) + 2) )
 print( "data: ", data[0:5, 0:5] )
+
+
 
 # Find row with transcript of interest
 for i in range(len(transcripts)):
@@ -53,9 +66,9 @@ ax.set_xlabel("developmental stage")
 ax.set_ylabel("mRNA abundance (RPKM)")
 
 ax.set_ylim(0,250)
-fig.savefig( "FBtr0073461.png" )
 plt.xticks(rotation=90)
 plt.tight_layout()
 plt.legend()
 plt.show()
+fig.savefig( "FBtr0073461.png" )
 plt.close( fig )
