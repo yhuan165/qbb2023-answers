@@ -18,17 +18,21 @@ def wrightfisher(af,pop):
 
 fig, ax = plt.subplots()
 
-for i in range(30):
-	results = wrightfisher(0.5, 8000)
-	x_positions = range(0,results[1])
-	y_positions = results[0]
-	ax.plot(x_positions, y_positions)
+tfixation = []
+for i in range(1000):
+	results = wrightfisher(0.5, 300)
+	#x_positions = range(0,results[1])
+	#y_positions = results[0]
+	#ax.plot(x_positions, y_positions)
+	tfixation.append(results[1])
 
-ax.set_xlabel("Generation")
-ax.set_ylabel("Allele Frequency")
-ax.set_ylim(0,1)
-ax.set_xlim(0)
-ax.set_title("Wright Fisher Model")
-fig.savefig( "WrightFisher2.png" )
+ax.hist(tfixation)
+
+ax.set_xlabel("Time to Fixation (generations)")
+ax.set_ylabel("Number of Occurance")
+#ax.set_ylim(0,1)
+#ax.set_xlim(0)
+ax.set_title("Histogram of Time to fixation for Wright Fisher Model")
+fig.savefig( "HistWrightFisher2.png" )
 
 plt.show()
