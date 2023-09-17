@@ -10,7 +10,7 @@ import statsmodels.api as sm
 
 #step 1.1
 df = pd.read_csv('/Users/cmdb/cmdb-quantbio/assignments/bootcamp/statistical_modeling/extra_data/aau1043_dnm.csv')
-sorteddf = df.sort_values(by=['Proband_id'])
+#print(df)
 
 #step 1.2
 count = df.groupby(['Proband_id','Phase_combined']).size().reset_index(name = 'Count')
@@ -26,18 +26,18 @@ for i in range(0,len(count),2):
 #step 1.3
 
 deNovoCountDF = pd.DataFrame.from_dict(dicto, orient = 'index', columns = ['maternal_dnm', 'paternal_dnm'])
-print(deNovoCountDF)
+#print(deNovoCountDF)
 
 #step 1.4
 dfage = pd.read_csv('/Users/cmdb/cmdb-quantbio/assignments/bootcamp/statistical_modeling/extra_data/aau1043_parental_age.csv', index_col = 'Proband_id')
-print(dfage)
+#print(dfage)
 
 #step 1.5
 concat = pd.concat([deNovoCountDF,dfage],axis = 1, join = 'inner')
-print(concat)
+#print(concat)
 
 #step 2.1
-
+'''
 fig, ax = plt.subplots()
 ax.scatter(concat["Father_age"],concat["paternal_dnm"])
 ax.set_xlabel("Father Age")
@@ -53,25 +53,31 @@ bx.set_ylabel("Maternal De Novo Mutations")
 bx.set_title("Maternal DNMs in relation to Mother Age")
 fig.savefig("ex2_a.png")
 plt.show()
-
-'''
-bigdict = count.to_dict()
-
-print(bigdict)
 '''
 
+#step 2.2
+model = smf.ols(formula = "maternal_dnm ~ 1 + Mother_age", data = concat)
+results = model.fit()
+#print(results.summary())
 
-#finlist = count.tolist()
-#print(finlist)
+#step 2.3
+modelf = smf.ols(formula = "paternal_dnm ~ 1 + Father_age", data = concat)
+resultsf = modelf.fit()
+#print(resultsf.summary())
 
-'''
-dicto = {}
-for i in range(len(df)):
-	dicto[df.sorteddf[i,"Proband_id"]] = []
+#step 2.4
+#in readme
 
-print(dicto)
-'''
+#step 2.5
+fig, cx = plt.subplots()
+cx.hist(df.loc[df["Phase_combined"] == "mother", "Proband_id"], bins = 30, label = "mother", alpha = 0.5)
+cx.hist(df.loc[df["Phase_combined"] == "father", "Proband_id"], bins = 30, label = "father", alpha = 0.5)
+cx.set_xlabel("Proband ID")
+cx.set_ylabel("Number of DeNovoMutations")
+cx.set_title("Distribution of DNMs by Proband ID")
+cx.legend()
+fig.savefig("ex2_c.png")
+plt.show()
 
 
-#pivot = count.pivot_table(index = 'Proband_id', columns = "Phase_combined", values = 'Count')
-#print(pivot)
+
