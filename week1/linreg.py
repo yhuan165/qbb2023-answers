@@ -59,25 +59,32 @@ plt.show()
 model = smf.ols(formula = "maternal_dnm ~ 1 + Mother_age", data = concat)
 results = model.fit()
 #print(results.summary())
+#print(results.pvalues)
 
 #step 2.3
 modelf = smf.ols(formula = "paternal_dnm ~ 1 + Father_age", data = concat)
 resultsf = modelf.fit()
 #print(resultsf.summary())
+#print(resultsf.pvalues)
 
 #step 2.4
 #in readme
 
 #step 2.5
 fig, cx = plt.subplots()
-cx.hist(df.loc[df["Phase_combined"] == "mother", "Proband_id"], bins = 30, label = "mother", alpha = 0.5)
-cx.hist(df.loc[df["Phase_combined"] == "father", "Proband_id"], bins = 30, label = "father", alpha = 0.5)
-cx.set_xlabel("Proband ID")
-cx.set_ylabel("Number of DeNovoMutations")
+cx.hist(count.loc[count["Phase_combined"] == "mother", "Count"], bins = 30, label = "mother", alpha = 0.5)
+cx.hist(count.loc[count["Phase_combined"] == "father", "Count"], bins = 30, label = "father", alpha = 0.5)
+cx.set_xlabel("Number of De Novo Mutations")
+cx.set_ylabel("Frequency (Number of Proband IDs)")
 cx.set_title("Distribution of DNMs by Proband ID")
 cx.legend()
 fig.savefig("ex2_c.png")
 plt.show()
+
+#step 2.6
+print(sps.ttest_ind(
+count.loc[count['Phase_combined'] == 'father','Count'],
+count.loc[count['Phase_combined'] == 'mother','Count']))
 
 
 
