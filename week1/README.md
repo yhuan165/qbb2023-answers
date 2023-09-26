@@ -1,8 +1,8 @@
 #2.2
-The maternal DNMs as a dependable variable of mother age has a correlation of 0.38 with a p value of 6.87e-24 which suggests that with the increase of the mother's age there is a 0.38x increase in the number of maternal de novo mutations. 
+The maternal DNMs as a dependable variable of mother age has a correlation of 0.38 with a p value of 6.87e-24 which suggests that with every year, as the mother's age increases by 1, the number of de novo mutations predicted increases by 0.38. So for about every 3 years increase in the mothers age, there is an addition of a de novo mutation.
 
 #2.3
-The paternal DNMs as a dependable variable of father age has a correlation of 1.35 with a p value of 1.55e-84 which suggests that with the increase of the father's age there is a 1.35x increase in the number of paternal de novo mutations. 
+The paternal DNMs as a dependable variable of father age has a correlation of 1.35 with a p value of 1.55e-84 which suggests that with every year, a 1 year increase of the father's age there are 1.35 predicted de novo mutation. Because de novo mutations should be whole numbers, for every 8 month increase in the father's age, there is 1 additional paternal de novo mutations. 
 
 #2.4
 1.3538 * 50.5 + 10.3263 = 78.69
