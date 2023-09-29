@@ -1,6 +1,6 @@
 DNA Sequence:
 
-score of alignment: 266300.0
+score of alignment: 266300.\n
 
 number of gaps in sequence 1: 46
 
