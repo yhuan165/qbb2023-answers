@@ -16,13 +16,14 @@ Step 1.5:
 2. Similarly to 1.4 but even more so, both the poisson and normal distribution fits very well to the histogram produced.
 
 Step 2.5:
-ATTTTGTGAGATATTTTCTCACATATTTTCTCTCTTTTATATATTTTT
+ATTGATTCTTATTCATTT
 
 Step 2.6:
 To accurate reconstruct the sequence, more information about how many times a 3-mer appears could be helpful. Or, longer reads would help identify the sequence better. For example, at the moment it's difficult to identify the "start".
 
 Step 3.1:
 Title: The Significance of Genomics in Modern Science and Medicine
+Prompt: Write an essay with citations on the importance of genomics research.
 
 Introduction
 
