@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 def main():
     # Load file names and fragment width
-    forward_fname, reverse_fname, out_fname= sys.argv[1:]
+    forward_fname, reverse_fname, out_fname = sys.argv[1:]
 
     # Define what genomic region we want to analyze
     target = "chr2R"
@@ -26,7 +26,7 @@ def main():
     frag_size = 198
     combinedsamp = numpy.zeros(chromlen, float)
     combinedsamp[frag_size//2:] += forwardsamp[:-frag_size//2]
-    combinedsamp[:-frag_size//2:] += reversesamp[frag_size//2:]
+    combinedsamp[:-frag_size//2] += reversesamp[frag_size//2:]
 
     # Load the control bedgraph data, reusing the function we already wrote
     forwardctrl = load_bedgraph('control.fwd.bg', target, chromstart, chromend)
@@ -35,7 +35,8 @@ def main():
     # Combine tag densities
     combinedctrl = numpy.zeros(chromlen, float)
     combinedctrl[frag_size//2:] += forwardctrl[:-frag_size//2]
-    combinedctrl[:-frag_size//2:] += reversectrl[frag_size//2:]
+    combinedctrl[:-frag_size//2] += reversectrl[frag_size//2:]
+
     # Adjust the control to have the same coverage as our sample
     ctrlcoverage = numpy.sum(combinedctrl)
     sampcoverage = numpy.sum(combinedsamp)
@@ -63,7 +64,7 @@ def main():
     # or larger
     # Also, don't forget that your background is per base, while your sample is
     # per 2 * width bases. You'll need to adjust your background
-    pvaluematrix = 1-(scipy.stats.poisson.cdf(samplescore,(2*frag_size*backgroundscore)))
+    pvaluematrix = 1-(scipy.stats.poisson.cdf(samplescore,(2*frag_size*higherscore)))
 
     # Transform the p-values into -log10
     # You will also need to set a minimum pvalue so you doen't get a divide by
@@ -80,7 +81,7 @@ def main():
     write_wiggle(logpvalue,target,chromstart,f"{out_fname}.wig")
     
     # Write bed file with non-overlapping peaks defined by high-scoring regions 
-    write_bed(logpvalue, target,chromstart,chromend,frag_size,f"{out_fname}.bed")
+    write_bed(logpvalue,target,chromstart,chromend,frag_size,f"{out_fname}.bed")
 
 def write_wiggle(pvalues, chrom, chromstart, fname):
     output = open(fname, 'w')
