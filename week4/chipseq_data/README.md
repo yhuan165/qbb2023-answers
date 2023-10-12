@@ -6,4 +6,6 @@ Combined peaks: 172 peaks
 95% peaks from sample 1 and 89% of peaks from sample 2
 
 Question 3:
+How reproducible are the peaks called between the two samples? Is the p-value range of a peak indicative of reproducibility? Is it completely consistent?
 
+The peaks called between the two samples should be pretty reproducible as we have the peaks where the p-values are less than 1e-10, which demonstrates that these peaks are not random and most likely actual data peaks from Chip seq, and therefore reproducible. It is not completely consistent as even seen in sample 1 and 2 peaks, only a portion of the peaks overlap in the combined peaks. 
