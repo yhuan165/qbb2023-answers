@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # step 1.1
 bwa index sacCer3.fa
