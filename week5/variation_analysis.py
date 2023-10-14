@@ -41,20 +41,16 @@ for line in open("final.vcf"):
 	for i in data:
 		single = i.split(':')
 		DP = single[2]
-		#if ',' in DP:
-		#	list_depth.append(int(DP.split(',')[0]))
 		if '.' in DP:
 			continue
 		else:
 			list_depth.append(int(DP))
 
 		GQ = single[1]
-		#if ',' in DP:
-		#	gene_qual.append(float(GQ.split(',')[0]))
-		if '.' in DP:
-			continue
-		else:
+		if float(GQ) > 0:
 			gene_qual.append(float(GQ))
+		else: 
+			continue
 
 	AF = list(filter(lambda x: 'AF=' in x, info))
 	AFnum = AF[0].split('=')[1]
