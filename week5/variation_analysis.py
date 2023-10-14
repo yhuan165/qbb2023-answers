@@ -110,7 +110,7 @@ effect_values = list(effects_dict.values())
 ax4.bar(range(len(effects_dict)), effect_values)
 ax4.set_xlabel("Predicted Effects")
 ax4.set_ylabel("Frequency (allele)")
-ax4.set_title("Predicted efects of variants")
+ax4.set_title("Predicted effects of variants")
 ax4.set_xticks(range(len(effect_keys)))
 ax4.set_xticklabels(effect_keys, rotation = 'vertical',  fontsize = 7)
 
