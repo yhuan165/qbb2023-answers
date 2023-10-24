@@ -72,7 +72,7 @@ for line in open("final.vcf"):
 # step 3.1
 
 
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2, figsize = (10,6)) # gridspec_kw={'height_ratios': [1, 2]}
 ax1.hist(list_depth, bins = 300)
 ax1.set_xlim(0,100)
 ax1.set_xlabel("Read Depth")
@@ -89,7 +89,7 @@ ax2.set_title("Distribution of genotype quality")
 
 #step 3.3
 
-ax3.hist(allele_freq, bins = 50)
+ax3.hist(allele_freq, bins = 15)
 ax3.set_xlabel("Allele Frequency")
 ax3.set_ylabel("Frequency (sample)")
 ax3.set_title("Distribution of allele frequency")
@@ -110,7 +110,10 @@ ax4.set_title("Predicted effects of variants")
 ax4.set_xticks(range(len(effect_keys)))
 ax4.set_xticklabels(effect_keys, rotation = 'vertical',  fontsize = 7)
 
+fig.suptitle('Variant Patterns')
 fig.tight_layout()
 fig.savefig("multiplot.png")
 plt.show()
+
+
 
