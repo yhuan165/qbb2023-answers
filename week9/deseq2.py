@@ -10,15 +10,15 @@ from pydeseq2 import preprocessing
 from pydeseq2.dds import DeseqDataSet
 from pydeseq2.ds import DeseqStats
 
-'''
+
 # read in data
-counts_df = pd.read_csv("gtex_whole_blood_counts_formatted.txt", index_col = 0)
+# counts_df = pd.read_csv("gtex_whole_blood_counts_formatted.txt", index_col = 0)
 
 # read in metadata
-metadata = pd.read_csv("gtex_metadata.txt", index_col = 0)
-
+# metadata = pd.read_csv("gtex_metadata.txt", index_col = 0)
+'''
 counts_df_normed = preprocessing.deseq2_norm(counts_df)[0]
-counts_df_normed = np.log2(counts_df_normed + 1)
+counts_df_norme	d = np.log2(counts_df_normed + 1)
 
 full_design_df = pd.concat([counts_df_normed, metadata], axis=1)
 
@@ -41,16 +41,50 @@ with open(output_file, mode='w', newline='') as file:
         results = model.fit()
         writer.writerow([gene, results.params['SEX'], results.pvalues['SEX']])
 '''
-final_table = pd.read_csv("DE_results.csv", index_col = 0)
-final_table['P-Value']= final_table['P-Value'].fillna(1.0)
-final_table['Q-Value'] = multitest.fdrcorrection(final_table['P-Value'], method = 'indep', alpha=0.1)[1]
 
-#loop through and write to file
+# final_table = pd.read_csv("DE_results.csv", index_col = 0)
+# final_table['P-Value']= final_table['P-Value'].fillna(1.0)
+# final_table['Q-Value'] = multitest.fdrcorrection(final_table['P-Value'], method = 'indep', alpha=0.1)[1]
 
-f = open("genelist.txt", "w")
-for i in final_table.loc[final_table['Q-Value']<0.1,:].index:
-	f.write(i+ "\n")
-f.close()
+# #loop through and write to file
+
+# f = open("genelist.txt", "w")
+# for i in final_table.loc[final_table['Q-Value']<0.1,:].index:
+# 	f.write(i+ "\n")
+# f.close()
 
 
+# dds = DeseqDataSet(
+#     counts=counts_df,
+#     metadata=metadata,
+#     design_factors="SEX",
+#     n_cpus=4,
+# )
+
+# dds.deseq2()
+# stat_res = DeseqStats(dds)
+# stat_res.summary()
+# results = stat_res.results_df
+
+# f = open("des2genelist.txt", "w")
+# for i in results.loc[results['padj']<0.1,:].index:
+# 	f.write(i+ "\n")
+# f.close()
+
+genelist = []
+for line in open("genelist.txt"):
+	gene = line.rstrip('\n')
+	genelist.append(gene)
+
+des2genelist = []
+for line1 in open("des2genelist.txt"):
+	gene1 = line1.rstrip('\n')
+	des2genelist.append(gene1)
+
+geneset = set(genelist)
+des2genelist = set(des2genelist)
+intersect = geneset.intersection(des2genelist)
+
+index = (len(intersect)/(len(genelist)+len(des2genelist))) * 100
+print(index)
 
