@@ -9,13 +9,13 @@ from statsmodels.stats import multitest
 from pydeseq2 import preprocessing
 from pydeseq2.dds import DeseqDataSet
 from pydeseq2.ds import DeseqStats
-
+import matplotlib.pyplot as plt
 
 # read in data
-# counts_df = pd.read_csv("gtex_whole_blood_counts_formatted.txt", index_col = 0)
+counts_df = pd.read_csv("gtex_whole_blood_counts_formatted.txt", index_col = 0)
 
 # read in metadata
-# metadata = pd.read_csv("gtex_metadata.txt", index_col = 0)
+metadata = pd.read_csv("gtex_metadata.txt", index_col = 0)
 '''
 counts_df_normed = preprocessing.deseq2_norm(counts_df)[0]
 counts_df_norme	d = np.log2(counts_df_normed + 1)
@@ -54,23 +54,23 @@ with open(output_file, mode='w', newline='') as file:
 # f.close()
 
 
-# dds = DeseqDataSet(
-#     counts=counts_df,
-#     metadata=metadata,
-#     design_factors="SEX",
-#     n_cpus=4,
-# )
+dds = DeseqDataSet(
+    counts=counts_df,
+    metadata=metadata,
+    design_factors="SEX",
+    n_cpus=4,
+)
 
-# dds.deseq2()
-# stat_res = DeseqStats(dds)
-# stat_res.summary()
-# results = stat_res.results_df
+dds.deseq2()
+stat_res = DeseqStats(dds)
+stat_res.summary()
+results = stat_res.results_df
 
 # f = open("des2genelist.txt", "w")
 # for i in results.loc[results['padj']<0.1,:].index:
 # 	f.write(i+ "\n")
 # f.close()
-
+'''
 genelist = []
 for line in open("genelist.txt"):
 	gene = line.rstrip('\n')
@@ -87,4 +87,27 @@ intersect = geneset.intersection(des2genelist)
 
 index = (len(intersect)/(len(genelist)+len(des2genelist))) * 100
 print(index)
+'''
+results1 = results.dropna(subset=['padj'])
+
+fig, ax = plt.subplots()
+
+log2fold = results1['log2FoldChange']
+pvalue = results1['pvalue']
+padj = results1['padj']
+
+log10pvalue = -1*(np.log10(pvalue))
+
+DEGs = (padj < 0.1) & (abs(log2fold) > 1)
+
+ax.scatter(log2fold, log10pvalue, color='grey', alpha=0.5, label='Not DE')
+ax.scatter(log2fold[DEGs], log10pvalue[DEGs], color='red', alpha=0.7, label='DEGs')
+ax.set_xlabel("Log2FoldChange")
+ax.set_ylabel("-log10 of P-Value")
+ax.set_title("Didfferential expression Volcano Plot")
+fig.tight_layout()
+plt.show()
+
+fig.savefig("volc.png")
+
 
