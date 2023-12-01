@@ -20,7 +20,7 @@ counts_df_logged = np.log2(counts_df_normed + 1)
 # merge with metadata
 full_design_df = pd.concat([counts_df_logged, metadata], axis=1)
 
-print(full_design_df)
+# print(full_design_df)
 
 #exercise 1.1
 # row = full_design_df.loc['GTEX-113JC'] 
@@ -38,19 +38,35 @@ print(full_design_df)
 # fig.savefig("GTEX-113JC.png")
 
 #exercise 1.2
-male = full_design_df.loc[full_design_df['SEX'] == 1, 'MXD4']
-female = full_design_df.loc[full_design_df['SEX'] == 2, 'MXD4']
-print(male)
-print(female)
+# male = full_design_df.loc[full_design_df['SEX'] == 1, 'MXD4']
+# female = full_design_df.loc[full_design_df['SEX'] == 2, 'MXD4']
+# print(male)
+# print(female)
 
-fig, bx = plt.subplots()
+# fig, bx = plt.subplots()
 
-bx.hist(male, bins = 20, alpha = 0.5, label = 'male')
-bx.hist(female, bins = 20, alpha = 0.5, label = 'female')
-bx.set_xlabel("Gene Expression for MXD4 (log2(normalized counts))")
-bx.set_ylabel("Number of Samples")
-bx.legend()
+# bx.hist(male, bins = 20, alpha = 0.5, label = 'male')
+# bx.hist(female, bins = 20, alpha = 0.5, label = 'female')
+# bx.set_xlabel("Gene Expression for MXD4 (log2(normalized counts))")
+# bx.set_ylabel("Number of Samples")
+# bx.legend()
+# fig.tight_layout()
+# plt.show()
+
+# fig.savefig("MXD4.png")
+
+#exercise 1.3
+age = full_design_df['AGE'].value_counts()
+indexes = age.index
+
+fig, cx = plt.subplots()
+
+cx.bar(indexes, age)
+cx.set_xlabel("Age")
+cx.set_ylabel("Number of Samples")
+cx.legend()
 fig.tight_layout()
 plt.show()
 
-fig.savefig("MXD4.png")
+fig.savefig("Age.png")
+
