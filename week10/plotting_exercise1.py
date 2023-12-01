@@ -56,17 +56,41 @@ full_design_df = pd.concat([counts_df_logged, metadata], axis=1)
 # fig.savefig("MXD4.png")
 
 #exercise 1.3
-age = full_design_df['AGE'].value_counts()
-indexes = age.index
+# age = full_design_df['AGE'].value_counts()
+# indexes = age.index
 
-fig, cx = plt.subplots()
+# fig, cx = plt.subplots()
 
-cx.bar(indexes, age)
-cx.set_xlabel("Age")
-cx.set_ylabel("Number of Samples")
-cx.legend()
+# cx.bar(indexes, age)
+# cx.set_xlabel("Age")
+# cx.set_ylabel("Number of Samples")
+# cx.legend()
+# fig.tight_layout()
+# plt.show()
+
+# fig.savefig("Age.png")
+
+#exercise 1.4
+male = full_design_df.loc[full_design_df['SEX'] == 1, ['LPXN', 'AGE']]
+female = full_design_df.loc[full_design_df['SEX'] == 2, ['LPXN', 'AGE']]
+malemedian = male.groupby('AGE')['LPXN'].median()
+femalemedian = female.groupby('AGE')['LPXN'].median()
+
+maleindex = malemedian.index
+
+# print(malemedian)
+# print(femalemedian)
+
+
+fig, dx = plt.subplots()
+
+dx.plot(maleindex, malemedian, label = 'male')
+dx.plot(maleindex, femalemedian, label = 'female')
+dx.set_xlabel("Age")
+dx.set_ylabel("Number of Samples")
+dx.legend()
 fig.tight_layout()
 plt.show()
 
-fig.savefig("Age.png")
+fig.savefig("LPXN.png")
 
