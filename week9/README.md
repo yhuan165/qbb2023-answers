@@ -1,1 +1,1 @@
-Jaccard index: 33.21770880876313
+Jaccard index: 49.74029524330235

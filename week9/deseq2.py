@@ -12,10 +12,10 @@ from pydeseq2.ds import DeseqStats
 import matplotlib.pyplot as plt
 
 # read in data
-counts_df = pd.read_csv("gtex_whole_blood_counts_formatted.txt", index_col = 0)
+# counts_df = pd.read_csv("gtex_whole_blood_counts_formatted.txt", index_col = 0)
 
 # read in metadata
-metadata = pd.read_csv("gtex_metadata.txt", index_col = 0)
+# metadata = pd.read_csv("gtex_metadata.txt", index_col = 0)
 '''
 counts_df_normed = preprocessing.deseq2_norm(counts_df)[0]
 counts_df_norme	d = np.log2(counts_df_normed + 1)
@@ -53,7 +53,7 @@ with open(output_file, mode='w', newline='') as file:
 # 	f.write(i+ "\n")
 # f.close()
 
-
+'''
 dds = DeseqDataSet(
     counts=counts_df,
     metadata=metadata,
@@ -65,12 +65,12 @@ dds.deseq2()
 stat_res = DeseqStats(dds)
 stat_res.summary()
 results = stat_res.results_df
-
+'''
 # f = open("des2genelist.txt", "w")
 # for i in results.loc[results['padj']<0.1,:].index:
 # 	f.write(i+ "\n")
 # f.close()
-'''
+
 genelist = []
 for line in open("genelist.txt"):
 	gene = line.rstrip('\n')
@@ -84,9 +84,12 @@ for line1 in open("des2genelist.txt"):
 geneset = set(genelist)
 des2genelist = set(des2genelist)
 intersect = geneset.intersection(des2genelist)
+together = geneset.union(des2genelist)
 
-index = (len(intersect)/(len(genelist)+len(des2genelist))) * 100
+index = (len(intersect)/len(together)) * 100
 print(index)
+
+
 '''
 results1 = results.dropna(subset=['padj'])
 
@@ -109,5 +112,5 @@ fig.tight_layout()
 plt.show()
 
 fig.savefig("volc.png")
-
+'''
 
